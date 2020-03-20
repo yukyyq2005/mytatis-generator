@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<#assign pkn=""><#assign pkt =""><#assign pkb ="">
+<#list table.pkColumns as pk>
+	<#assign pkb =pk.columnNameLower>
+	<#assign pkn =pk.sqlName?lower_case>
+	<#assign pkt =pk.javaType>
+</#list>
+<mapper namespace="${basepackage}.dao.mapper.${table.className}Mapper">
+	<resultMap id="BaseResultMap" type="${basepackage}.dao.model.${table.className}">
+<#list table.pkColumns as cc>
+		<id property="${cc.columnNameLower}" 							column="${cc.sqlName?lower_case}" javaType="${cc.javaType}" /><!-- 主键编号  -->
+</#list><#list table.notPkColumns as cc>
+		<result property="${cc.columnNameLower}"	column="${cc.sqlName?lower_case}" javaType="${cc.javaType}" /><!-- ${cc.columnAlias} -->
+</#list>
+    </resultMap>
+    <sql id="tb">${table.sqlName?lower_case}</sql>
+</mapper>
